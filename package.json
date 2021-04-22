@@ -3,6 +3,7 @@
 	"displayName": "aurora-vscode-extension",
 	"description": "",
 	"version": "0.0.1",
+	"publisher": "fakerone",
 	"engines": {
 		"vscode": "^1.55.0"
 	},
