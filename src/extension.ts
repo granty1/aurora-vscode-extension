@@ -1,7 +1,9 @@
 import * as vscode from 'vscode';
-
+import * as regQues from './question'
 
 export function activate(context: vscode.ExtensionContext) {
+
+	regQues.register(context);
 
 	console.log('Congratulations, your extension "aurora-vscode-extension" is now active!');
 

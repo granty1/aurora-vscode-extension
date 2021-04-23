@@ -23,8 +23,20 @@
 			{
 				"command": "aurora.ask",
 				"title": "Ask question"
-			}
-		]
+			},
+			{
+                "command": "aurora.getQuestion",
+                "title": "我要提问题"
+            }
+		],
+		"menus": {
+			"explorer/context": [
+                {
+                    "command": "aurora.getQuestion",
+                    "group": "navigation"
+                }
+            ]
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run package",
