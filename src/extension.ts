@@ -1,21 +1,12 @@
 import * as vscode from 'vscode';
 import * as regQues from './question'
+import * as regTscancode from './tscancode'
+import * as processView from './processView'
 
 export function activate(context: vscode.ExtensionContext) {
-
 	regQues.register(context);
-
-	console.log('Congratulations, your extension "aurora-vscode-extension" is now active!');
-
-	let disposable = vscode.commands.registerCommand('aurora.helloWorld', () => {
-		vscode.window.showInformationMessage('Hello World from aurora-vscode-extension!');
-	});
-
-	context.subscriptions.push(disposable);
-
-	context.subscriptions.push(vscode.commands.registerCommand('aurora.ask', () => {
-		vscode.window.showInformationMessage('Good day?', 'good', 'bad')
-	}))
+	regTscancode.register(context);
+	processView.register(context);
 }
 
 export function deactivate() { }
