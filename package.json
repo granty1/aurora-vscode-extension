@@ -3,8 +3,9 @@
 	"displayName": "aurora-vscode-extension",
 	"description": "",
 	"version": "0.0.1",
+	"publisher": "fakerone",
 	"engines": {
-		"vscode": "^1.55.0"
+		"vscode": "^1.54.0"
 	},
 	"categories": [
 		"Other"
@@ -14,16 +15,100 @@
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "ProcessList",
+					"title": "ProcessMenu",
+					"icon": "resources/auroraProcess.svg"
+				}
+			]
+		},
+		"views": {
+			"ProcessList": [
+				{
+					"id": "aurora.ProcessView",
+					"name": "进程列表"
+				}
+			]
+		},
 		"commands": [
 			{
-				"command": "aurora.helloWorld",
-				"title": "Hello World"
-			},
+                "command": "aurora.getQuestion",
+                "title": "我要提问题"
+            },
 			{
-				"command": "aurora.ask",
-				"title": "Ask question"
-			}
-		]
+                "command": "aurora.getCurrentFilePath",
+                "title": "分析当前文件(夹)下的CPP"
+            },
+            {
+                "command": "aurora.addProcess",
+                "title": "添加进程",
+                "icon": {
+                    "light": "resources/light/add.svg",
+                    "dark": "resources/dark/add.svg"
+                }
+            },
+            {
+                "command": "aurora.refreshProcess",
+                "title": "刷新数据",
+                "icon": {
+                    "light": "resources/light/refresh.svg",
+                    "dark": "resources/dark/refresh.svg"
+                }
+            },
+            {
+                "command": "aurora.deleteProcess",
+                "title": "删除进程"
+            },
+            {
+                "command": "aurora.getLog",
+                "title": "查看日志"
+            }
+		],
+		"menus": {
+			"editor/context": [
+				{
+					"when": "editorFocus",
+					"command": "aurora.getCurrentFilePath",
+					"group": "navigation"
+				} 
+			],
+			"explorer/context": [
+                {
+                    "command": "aurora.getQuestion",
+                    "group": "navigation"
+                },
+				{
+                    "command": "aurora.getCurrentFilePath",
+                    "group": "navigation"
+                }
+            ],
+            "view/title": [
+                {
+                    "command": "aurora.addProcess",
+					"when": "view == aurora.ProcessView",
+					"group": "navigation"
+                },
+                {
+                    "command": "aurora.refreshProcess",
+					"when": "view == aurora.ProcessView",
+					"group": "navigation"
+                }
+            ],
+            "view/item/context": [
+                {
+                    "command": "aurora.deleteProcess",
+                    "when": "view == aurora.ProcessView",
+                    "group":"navigation"
+                },
+                {
+                    "command": "aurora.getLog",
+                    "when": "view == aurora.ProcessView",
+                    "group":"navigation"
+                }
+            ]
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run package",
@@ -37,7 +122,7 @@
 		"test": "node ./out/test/runTest.js"
 	},
 	"devDependencies": {
-		"@types/vscode": "^1.55.0",
+		"@types/vscode": "^1.54.0",
 		"@types/glob": "^7.1.3",
 		"@types/mocha": "^8.0.4",
 		"@types/node": "^12.11.7",
