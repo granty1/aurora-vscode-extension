@@ -28,14 +28,14 @@ export const FileUtil = {
         let romConfigList = this.getRomConfigFileList(userRoot);
         romConfigList = romConfigList ? romConfigList : [];
         let exist = false;
-        romConfigList.forEach((romConfig: { path: string; })=>{
-            if(romConfig.path == srcPath){
+        romConfigList.forEach((romConfig: { label: string; })=>{
+            if(romConfig.label == srcPath){
                 exist = true;
             }
         })
         !exist && romConfigList.push({
 			label: srcPath,
-            path: srcPath
+            path: srcPath.substring(0,srcPath.lastIndexOf('\\')+1)+"log\\"
         });
         this.writeMetaInfo(userRoot, romConfigList);
     },

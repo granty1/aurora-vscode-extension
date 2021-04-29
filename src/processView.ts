@@ -33,6 +33,9 @@ const register = function(context: vscode.ExtensionContext){
 	context.subscriptions.push(vscode.commands.registerCommand('aurora.deleteProcess', (config) => {
 		processTree.deleteProcess(config);
 	}));
+	context.subscriptions.push(vscode.commands.registerCommand('aurora.openFile', (resource: vscode.Uri) => {
+		vscode.window.showTextDocument(resource);
+	}));
 }
 
 export {
