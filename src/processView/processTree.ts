@@ -6,7 +6,7 @@ import * as mkdirp from 'mkdirp';
 import * as rimraf from 'rimraf';
 import { FileUtil } from "./fileUtil";
 
-
+const PROCESS_FILE_NAME = 'process.json';
 namespace _ {
 
 	function handleResult<T>(resolve: (result: T) => void, reject: (error: Error) => void, error: Error | null | undefined, result: T): void {
@@ -159,12 +159,12 @@ export class ProcessTree implements vscode.TreeDataProvider<Entry>, vscode.FileS
 		this._onDidChangeFile = new vscode.EventEmitter<vscode.FileChangeEvent[]>();
 		this.userRoot = os.homedir();
         
-        if(!FileUtil.pathExists(path.join(this.userRoot, '.cprocess'))) {
+        if(!FileUtil.pathExists(path.join(this.userRoot, '.cprocess',"menu",PROCESS_FILE_NAME))) {
             //if not exists create default ahost floder
             try{
                 FileUtil.createDefaultANesFloder(this.userRoot);
             }catch(e){
-                vscode.window.showInformationMessage('Ahost need Administrator permission!');
+                vscode.window.showInformationMessage('Ahost need Administrator permission(ProcessTree)!');
             }
         }
         else{
@@ -188,7 +188,7 @@ export class ProcessTree implements vscode.TreeDataProvider<Entry>, vscode.FileS
 			treeItem.command = { command: 'aurora.openFile', title: "Open File", arguments: [element.uri], };
 			treeItem.contextValue = 'file';
 		}
-		else if(element.type === vscode.FileType.Directory && element.filepath != ""){
+		if(element.filepath != ""){
 			treeItem.label = element.filepath;
 		}
 		//console.log("treeItem            ",treeItem)
@@ -206,7 +206,12 @@ export class ProcessTree implements vscode.TreeDataProvider<Entry>, vscode.FileS
 			const result: [string, string,vscode.FileType][] = [];
 			for (let i = 0; i < romConfigFileList.length; i++) {
 				const child = romConfigFileList[i];
-				result.push([child.path,child.label, vscode.FileType.Directory]);
+				if(this.pathExists(child.path)){
+					result.push([child.path,child.label, vscode.FileType.Directory]);
+				}
+				else{
+					result.push([child.path,child.label, vscode.FileType.File]);
+				}
 			}
 			//console.log("result    ",result)
             return (result).map(([pathh,filepath,type])=>({uri: vscode.Uri.file(path.join(pathh)),filepath,type}));
@@ -230,7 +235,15 @@ export class ProcessTree implements vscode.TreeDataProvider<Entry>, vscode.FileS
             this.refresh();
         }
 	}
+	private pathExists(p: string): boolean {
+		try {
+			fs.accessSync(p);
+		} catch (err) {
+			return false;
+		}
 
+		return true;
+	}
 	watch(uri: vscode.Uri, options: { recursive: boolean; excludes: string[]; }): vscode.Disposable {
 		const watcher = fs.watch(uri.fsPath, { recursive: options.recursive }, async (event: string, filename: string | Buffer) => {
 			const filepath = path.join(uri.fsPath, _.normalizeNFC(filename.toString()));
