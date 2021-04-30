@@ -14,7 +14,7 @@ export class ScriptsTree implements vscode.TreeDataProvider<TreeNode> {
     constructor(context: vscode.ExtensionContext){
 		this.userRoot = os.homedir();
         
-        if(!FileUtil.pathExists(path.join(this.userRoot, '.cprocess',"menu",SCRIPTS_FILE_NAME))) {
+        if(!FileUtil.pathExists(path.join(this.userRoot, '.cprocess',SCRIPTS_FILE_NAME))) {
             //if not exists create default ahost floder
             try{
                 FileUtil.createDefaultANesFloder(this.userRoot);

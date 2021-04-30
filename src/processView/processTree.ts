@@ -159,7 +159,7 @@ export class ProcessTree implements vscode.TreeDataProvider<Entry>, vscode.FileS
 		this._onDidChangeFile = new vscode.EventEmitter<vscode.FileChangeEvent[]>();
 		this.userRoot = os.homedir();
         
-        if(!FileUtil.pathExists(path.join(this.userRoot, '.cprocess',"menu",PROCESS_FILE_NAME))) {
+        if(!FileUtil.pathExists(path.join(this.userRoot, '.cprocess',PROCESS_FILE_NAME))) {
             //if not exists create default ahost floder
             try{
                 FileUtil.createDefaultANesFloder(this.userRoot);
