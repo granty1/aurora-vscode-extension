@@ -29,6 +29,10 @@
 				{
 					"id": "aurora.ProcessView",
 					"name": "进程列表"
+				},
+				{
+					"id": "aurora.SctiptsView",
+					"name": "脚本列表"
 				}
 			]
 		},
@@ -62,8 +66,28 @@
 				"title": "删除进程"
 			},
 			{
-				"command": "aurora.getLog",
-				"title": "查看日志"
+				"command": "aurora.addScripts",
+				"title": "添加脚本",
+				"icon": {
+					"light": "resources/light/add.svg",
+					"dark": "resources/dark/add.svg"
+				}
+			},
+			{
+				"command": "aurora.refreshSctipts",
+				"title": "刷新数据",
+				"icon": {
+					"light": "resources/light/refresh.svg",
+					"dark": "resources/dark/refresh.svg"
+				}
+			},
+			{
+				"command": "aurora.deleteSctipts",
+				"title": "删除脚本"
+			},
+			{
+				"command": "aurora.execSctipts",
+				"title": "执行脚本"
 			}
 		],
 		"menus": {
@@ -94,6 +118,16 @@
 					"command": "aurora.refreshProcess",
 					"when": "view == aurora.ProcessView",
 					"group": "navigation"
+				},
+				{
+					"command": "aurora.addScripts",
+					"when": "view == aurora.SctiptsView",
+					"group": "navigation"
+				},
+				{
+					"command": "aurora.refreshSctipts",
+					"when": "view == aurora.SctiptsView",
+					"group": "navigation"
 				}
 			],
 			"view/item/context": [
@@ -103,8 +137,13 @@
 					"group": "navigation"
 				},
 				{
-					"command": "aurora.getLog",
-					"when": "view == aurora.ProcessView",
+					"command": "aurora.deleteSctipts",
+					"when": "view == aurora.SctiptsView",
+					"group": "navigation"
+				},
+				{
+					"command": "aurora.execSctipts",
+					"when": "view == aurora.SctiptsView",
 					"group": "navigation"
 				}
 			]
