@@ -4,6 +4,7 @@ import * as os from "os";
 import * as fs from 'fs';
 import * as mkdirp from 'mkdirp';
 import * as rimraf from 'rimraf';
+import * as cpro from 'child_process'
 import { FileUtil } from "./fileUtil";
 
 const PROCESS_FILE_NAME = 'process.json';
@@ -190,17 +191,35 @@ export class ProcessTree implements vscode.TreeDataProvider<Entry>, vscode.FileS
 		}
 		if(element.filepath != ""){
 			treeItem.label = element.filepath;
+			if(this.getProcessRunning(element.filepath)){
+				treeItem.iconPath = path.join(__filename, '..', '..', 'resources', 'light', 'run.svg');
+			}
+			else{
+				treeItem.iconPath = path.join(__filename, '..', '..', 'resources', 'dark', 'run.svg');
+			}
+			//vscode.window.showInformationMessage(treeItem.iconPath); 
 		}
 		//console.log("treeItem            ",treeItem)
 		return treeItem;
     }
+
+	getProcessRunning(file:string): boolean{
+		const cmd = `ps -ef|grep ${file}|grep -v grep`
+		try{
+			const str =  cpro.execSync(cmd);
+			//vscode.window.showInformationMessage(str.toString());
+			return true;
+		}catch(e){
+			vscode.window.showInformationMessage(e)
+		}
+		return false;
+	}
+
     async getChildren(element?: Entry): Promise<Entry[]>{
         if (element) {
-			//console.log("has element:          ",element)
 			const children = await this.readDirectory(element.uri);
 			return children.map(([name, type]) => ({ uri: vscode.Uri.file(path.join(element.uri.fsPath, name)), filepath:"", type:type}));
 		}
-		//console.log("element:          ",element)
 		const romConfigFileList = FileUtil.getRomConfigFileList(this.userRoot);
         if( romConfigFileList && romConfigFileList.length > 0){
 			const result: [string, string,vscode.FileType][] = [];
@@ -213,7 +232,6 @@ export class ProcessTree implements vscode.TreeDataProvider<Entry>, vscode.FileS
 					result.push([child.path,child.label, vscode.FileType.File]);
 				}
 			}
-			//console.log("result    ",result)
             return (result).map(([pathh,filepath,type])=>({uri: vscode.Uri.file(path.join(pathh)),filepath,type}));
         }else{
             return Promise.resolve([]);
