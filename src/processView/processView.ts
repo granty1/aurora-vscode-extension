@@ -36,6 +36,7 @@ const register = function(context: vscode.ExtensionContext){
 	context.subscriptions.push(vscode.commands.registerCommand('aurora.openFile', (resource: vscode.Uri) => {
 		vscode.window.showTextDocument(resource);
 	}));
+	setInterval(()=>{processTree.refresh()},1000)
 }
 
 export {
