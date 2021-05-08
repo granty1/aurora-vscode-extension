@@ -87,7 +87,11 @@
 			},
 			{
 				"command": "aurora.execSctipts",
-				"title": "执行脚本"
+				"title": "执行脚本",
+				"icon":{
+					"light": "resources/light/exec.svg",
+          			"dark": "resources/dark/exec.svg"
+				}
 			}
 		],
 		"menus": {
@@ -145,6 +149,11 @@
 					"command": "aurora.execSctipts",
 					"when": "view == aurora.SctiptsView",
 					"group": "navigation"
+				},
+				{
+					"command": "aurora.execSctipts",
+					"when": "view == aurora.SctiptsView",
+					"group": "inline"
 				}
 			]
 		}
