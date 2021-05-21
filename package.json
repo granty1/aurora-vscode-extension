@@ -38,6 +38,11 @@
 		},
 		"commands": [
 			{
+				"command": "aurora.lcovResult",
+				"title": "开始代码覆盖率分析",
+				"category":"aurora"
+			},
+			{
 				"command": "aurora.getQuestion",
 				"title": "我要提问题"
 			},
@@ -105,6 +110,10 @@
 			"explorer/context": [
 				{
 					"command": "aurora.getQuestion",
+					"group": "navigation"
+				},
+				{
+					"command": "aurora.lcovResult",
 					"group": "navigation"
 				},
 				{
