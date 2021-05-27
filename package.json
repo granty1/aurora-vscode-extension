@@ -38,6 +38,11 @@
 		},
 		"commands": [
 			{
+				"command": "aurora.lcovResult",
+				"title": "开始代码覆盖率分析",
+				"category": "aurora"
+			},
+			{
 				"command": "aurora.getQuestion",
 				"title": "我要提问题"
 			},
@@ -66,6 +71,14 @@
 				"title": "删除进程"
 			},
 			{
+				"command": "aurora.killProcess",
+				"title": "关闭进程"
+			},
+			{
+				"command": "aurora.startProcess",
+				"title": "启动进程"
+			},
+			{
 				"command": "aurora.addScripts",
 				"title": "添加脚本",
 				"icon": {
@@ -87,7 +100,11 @@
 			},
 			{
 				"command": "aurora.execSctipts",
-				"title": "执行脚本"
+				"title": "执行脚本",
+				"icon": {
+					"light": "resources/light/exec.svg",
+					"dark": "resources/dark/exec.svg"
+				}
 			}
 		],
 		"menus": {
@@ -101,6 +118,10 @@
 			"explorer/context": [
 				{
 					"command": "aurora.getQuestion",
+					"group": "navigation"
+				},
+				{
+					"command": "aurora.lcovResult",
 					"group": "navigation"
 				},
 				{
@@ -132,6 +153,16 @@
 			],
 			"view/item/context": [
 				{
+					"command": "aurora.killProcess",
+					"when": "view == aurora.ProcessView",
+					"group": "navigation"
+				},
+				{
+					"command": "aurora.startProcess",
+					"when": "view == aurora.ProcessView",
+					"group": "navigation"
+				},
+				{
 					"command": "aurora.deleteProcess",
 					"when": "view == aurora.ProcessView",
 					"group": "navigation"
@@ -145,6 +176,11 @@
 					"command": "aurora.execSctipts",
 					"when": "view == aurora.SctiptsView",
 					"group": "navigation"
+				},
+				{
+					"command": "aurora.execSctipts",
+					"when": "view == aurora.SctiptsView",
+					"group": "inline"
 				}
 			]
 		}

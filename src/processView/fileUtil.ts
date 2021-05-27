@@ -32,13 +32,13 @@ export const FileUtil = {
             if(romConfig.label == srcPath){
                 exist = true;
             }
-        })
-        let tmpPath:String
+        });
+        let tmpPath:String;
         if(os.platform().indexOf('win') > -1){
-            tmpPath = srcPath.substring(0,srcPath.lastIndexOf('\\')+1)+"log\\"
+            tmpPath = srcPath.substring(0,srcPath.lastIndexOf('\\')+1)+"log\\";
         }
         else{
-            tmpPath = srcPath.substring(0,srcPath.lastIndexOf('/')+1)+"log/"
+            tmpPath = srcPath.substring(0,srcPath.lastIndexOf('/')+1)+"log/";
         }
         !exist && romConfigList.push({
 			label: srcPath,
@@ -47,8 +47,8 @@ export const FileUtil = {
         this.writeMetaInfo(userRoot, romConfigList);
     },
 	writeMetaInfo:function(userRoot:string, metaInfo:string){
-        let pa=path.join(userRoot, '.cprocess', PROCESS_FILE_NAME)
+        let pa=path.join(userRoot, '.cprocess', PROCESS_FILE_NAME);
         vscode.window.showInformationMessage(pa);
         fs.writeFileSync(pa,JSON.stringify(metaInfo));
     }
-}
+};

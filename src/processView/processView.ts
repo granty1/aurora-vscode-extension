@@ -16,7 +16,7 @@ const register = function(context: vscode.ExtensionContext){
 				canSelectMany:true,
 				defaultUri:vscode.Uri.file(""),
 			}).then(function(files){
-				console.log(JSON.stringify(files))
+				console.log(JSON.stringify(files));
 				if(files && files.length > 0){
 					let userRoot = os.homedir();
 					files.forEach((file)=>{                      
@@ -25,7 +25,7 @@ const register = function(context: vscode.ExtensionContext){
 					processTree.refresh();
 				}
 			}
-        )
+        );
     }));
 	context.subscriptions.push(vscode.commands.registerCommand('aurora.refreshProcess', () => {
 		processTree.refresh();
@@ -33,12 +33,18 @@ const register = function(context: vscode.ExtensionContext){
 	context.subscriptions.push(vscode.commands.registerCommand('aurora.deleteProcess', (config) => {
 		processTree.deleteProcess(config);
 	}));
+	context.subscriptions.push(vscode.commands.registerCommand('aurora.killProcess', (config) => {
+		processTree.killProcess(config);
+	}));
+	context.subscriptions.push(vscode.commands.registerCommand('aurora.startProcess', (config) => {
+		processTree.startProcess(config);
+	}));
 	context.subscriptions.push(vscode.commands.registerCommand('aurora.openFile', (resource: vscode.Uri) => {
 		vscode.window.showTextDocument(resource);
 	}));
-	setInterval(()=>{processTree.refresh()},1000)
-}
+	setInterval(()=>{processTree.refresh()},1000);
+};
 
 export {
     register
-}
+};
