@@ -237,6 +237,26 @@ export class ProcessTree implements vscode.TreeDataProvider<Entry>, vscode.FileS
             return Promise.resolve([]);
         }
     }
+	startProcess(item : Entry){
+		const pos = item.filepath.lastIndexOf('/')
+		const filepath = item.filepath.substring(0,pos+1)
+		const cmd = `cd ${filepath} && ${item.filepath} -d`
+		try{
+			const str =  cpro.execSync(cmd);
+			return true;
+		}catch(e){
+			vscode.window.showInformationMessage(e)
+		}
+	}
+	killProcess(item : Entry){
+		const cmd = `ps -ef|grep ${item.filepath}|grep -v grep|awk -F" " '{print $2}'|xargs kill`
+		try{
+			const str =  cpro.execSync(cmd);
+			return true;
+		}catch(e){
+			vscode.window.showInformationMessage(e)
+		}
+	}
 	deleteProcess(item : Entry){
 		let romConfigList = FileUtil.getRomConfigFileList(this.userRoot);
         if(romConfigList && romConfigList.length > 0){
